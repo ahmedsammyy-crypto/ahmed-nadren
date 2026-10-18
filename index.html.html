@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أحمد ♥ ندرين</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg1:#2a0a1f;--bg2:#12040d;--pink:#ff4d8d;--gold:#ffd166;--text:#fff1f6;--card:rgba(255,255,255,.08)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Cairo,Tahoma,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 30% 20%,var(--bg1),var(--bg2));overflow-x:hidden;text-align:center}
+.screen{display:none;min-height:90vh;padding:24px 18px;flex-direction:column;align-items:center;justify-content:center;gap:18px;animation:in .6s ease}
+.screen.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(1.5rem,6vw,2.4rem);margin:0;font-weight:900;line-height:1.5}
+p{margin:0;line-height:1.9;font-size:1.05rem}
+.lock{font-size:4rem;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{transform:scale(1.15)}}
+input{width:min(320px,90%);padding:14px 18px;font:inherit;font-size:1.1rem;border-radius:999px;border:2px solid rgba(255,77,141,.5);background:rgba(255,255,255,.08);color:var(--text);text-align:center;outline:none}
+input:focus{border-color:var(--pink);box-shadow:0 0 18px rgba(255,77,141,.5)}
+.btn{font:inherit;font-weight:700;font-size:1.1rem;border:0;border-radius:999px;padding:14px 28px;color:#fff;background:linear-gradient(135deg,#ff4d8d,#ff7a59);cursor:pointer;box-shadow:0 6px 24px rgba(255,77,141,.45)}
+.err{color:var(--gold);min-height:1.5em;font-size:.95rem}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.note{font-size:.9rem;opacity:.75;max-width:360px}
+.choices{display:flex;flex-direction:column;gap:22px;align-items:center;margin-top:10px;width:100%}
+.yes-wrap{position:relative;display:flex;align-items:center;justify-content:center;gap:10px}
+.arrow{font-size:1.8rem;color:var(--gold);animation:pt 0.8s infinite alternate}
+.arrow.r{animation-name:pt2}
+@keyframes pt{to{transform:translateX(10px)}}
+@keyframes pt2{to{transform:translateX(-10px)}}
+#yes{font-size:1.2rem;padding:18px 26px;animation:glow 1.2s infinite alternate,wob 2s infinite}
+@keyframes glow{from{box-shadow:0 0 12px rgba(255,209,102,.6),0 0 30px rgba(255,77,141,.5)}to{box-shadow:0 0 30px rgba(255,209,102,1),0 0 60px rgba(255,77,141,.9)}}
+@keyframes wob{50%{transform:scale(1.07) rotate(-1.5deg)}}
+.sparkles{position:absolute;inset:-18px;pointer-events:none;font-size:1.1rem}
+#no{background:#3a3a3a;opacity:.35;box-shadow:none;font-size:.95rem;filter:grayscale(1);transition:left .12s,top .12s;touch-action:none}
+.big{font-size:6rem;animation:pop .7s cubic-bezier(.2,2,.4,1)}
+@keyframes pop{from{transform:scale(0)}}
+.msg{font-size:clamp(1.3rem,5vw,1.9rem);font-weight:900;color:var(--gold);line-height:1.7}
+.fall{position:fixed;top:-50px;font-size:2rem;pointer-events:none;z-index:50;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+.grid{display:grid;gap:14px;width:min(420px,100%)}
+.card{background:var(--card);border:1px solid rgba(255,77,141,.35);border-radius:22px;padding:18px;backdrop-filter:blur(6px)}
+.card b{display:block;font-size:1.3rem;color:var(--pink)}
+.card span{font-size:1.15rem}
+.special{border-color:var(--gold);background:rgba(255,209,102,.1)}
+.special b{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<section class="screen on" id="s-lock">
+  <div class="lock">🔒</div>
+  <h1>الموقع ده مقفول 💕</h1>
+  <p>اكتبي الباسورد عشان تدخلي</p>
+  <input id="pw" type="password" placeholder="الباسورد" autocomplete="off">
+  <div class="err" id="err"></div>
+  <button class="btn" id="enter">ادخلي ♥</button>
+</section>
+
+<section class="screen" id="s-q">
+  <h1>هل بتحبي المعلم سام<br>زعيم The Finals وحارق اللايتات؟ 🔥</h1>
+  <div class="choices" id="choices">
+    <div class="yes-wrap">
+      <span class="arrow">👉</span>
+      <button class="btn" id="yes">✨ اه بحبه وبموت فيه ✨</button>
+      <span class="arrow r">👈</span>
+    </div>
+    <button class="btn" id="no">لا عشان لوني اسود وعندي الملاريا</button>
+  </div>
+</section>
+
+<section class="screen" id="s-yes">
+  <div class="big">😊</div>
+  <div class="msg">وانا كمان بحبك يا عيوني<br>ومقدرش أعيش من غيرك</div>
+  <div class="msg" id="m2" style="display:none;color:var(--text)">وانا كمان بحبك يا حبيبي<br>وربنا ما يبعدنا عن بعض أبدا 🧸❤️</div>
+  <button class="btn" id="next" style="display:none">كمّلي ♥</button>
+</section>
+
+<section class="screen" id="s-info">
+  <h1>أحمد ♥ ندرين</h1>
+  <div class="grid">
+    <div class="card"><b>أحمد 🧸</b><span>٩ أبريل ٢٠٠٥</span></div>
+    <div class="card"><b>ندرين 🌸</b><span>٤ سبتمبر ٢٠٠٧</span></div>
+    <div class="card special"><b>عيد ميلاد حبنا 💞</b><span>٢٤ سبتمبر<br>أول مرة اتكلمنا فيها</span></div>
+  </div>
+  <p style="max-width:380px">الموقع ده اتعمل عشان نحتفظ بيه بكل حاجة تخصنا يا حبيبتي، ونحتفظ بالذكريات فيه وبكل اللي هو لذيذ. بحبك يا عيوني ♥</p>
+</section>
+
+<script>
+const $=id=>document.getElementById(id);
+let ac;
+function audio(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){}}
+function tone(f1,f2,d,type,vol){try{audio();const o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f1,ac.currentTime);o.frequency.exponentialRampToValueAtTime(f2,ac.currentTime+d);g.gain.setValueAtTime(vol||.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function whoosh(){tone(900,200,.18,'sawtooth',.12);setTimeout(()=>tone(300,700,.12,'square',.08),90)}
+function chime(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,f*1.01,.35,'sine',.2),i*110))}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0)}
+
+function rain(list,n){for(let i=0;i<n;i++){setTimeout(()=>{const e=document.createElement('div');e.className='fall';e.textContent=list[Math.floor(Math.random()*list.length)];e.style.left=Math.random()*95+'vw';e.style.fontSize=(1.4+Math.random()*2)+'rem';e.style.animationDuration=(3+Math.random()*3)+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),6500)},i*120)}}
+
+function check(){
+  const v=$('pw').value.trim().replace(/\s+/g,' ');
+  if(v==='الميخور سام'){audio();chime();show('s-q')}
+  else{$('err').textContent='الباسورد غلط يا قمر، جربي تاني 😉';$('pw').classList.remove('shake');void $('pw').offsetWidth;$('pw').classList.add('shake')}
+}
+$('enter').onclick=check;
+$('pw').addEventListener('keydown',e=>{if(e.key==='Enter')check()});
+
+$('yes').onclick=()=>{
+  audio();chime();show('s-yes');rain(['❤️','💖','🧸','💕'],40);
+  setTimeout(()=>{$('m2').style.display='block';rain(['🧸','❤️','🧸','💗'],45)},1800);
+  setTimeout(()=>{$('next').style.display='inline-block'},3200);
+};
+$('next').onclick=()=>{show('s-info');rain(['❤️','🧸','💕'],30)};
+
+const no=$('no');
+function dodge(e){
+  if(e){e.preventDefault();e.stopPropagation()}
+  whoosh();
+  const w=no.offsetWidth,h=no.offsetHeight;
+  no.style.position='fixed';
+  no.style.left=Math.max(8,Math.random()*(innerWidth-w-16))+'px';
+  no.style.top=Math.max(8,Math.random()*(innerHeight-h-16))+'px';
+  no.style.zIndex=5;
+}
+['mouseover','touchstart','pointerdown','focus','click'].forEach(ev=>no.addEventListener(ev,dodge,{passive:false}));
+</script>
+</body>
+</html>
